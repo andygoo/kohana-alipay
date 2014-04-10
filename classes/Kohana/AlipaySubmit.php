@@ -62,10 +62,10 @@ class Kohana_AlipaySubmit
 	}
 
 	/**
-     * 生成要请求给支付宝的参数数组
-     * @param $para_temp 请求前的参数数组
-     * @return 要请求的参数数组
-     */
+     	 * 生成要请求给支付宝的参数数组
+     	 * @param $para_temp 请求前的参数数组
+     	 * @return 要请求的参数数组
+     	 */
 	function buildRequestPara($para_temp) 
 	{
 		//除去待签名参数数组中的空值和签名参数
@@ -85,10 +85,10 @@ class Kohana_AlipaySubmit
 	}
 
 	/**
-     * 生成要请求给支付宝的参数数组
-     * @param $para_temp 请求前的参数数组
-     * @return 要请求的参数数组字符串
-     */
+     	 * 生成要请求给支付宝的参数数组
+     	 * @param $para_temp 请求前的参数数组
+     	 * @return 要请求的参数数组字符串
+     	 */
 	function buildRequestParaToString($para_temp) 
 	{
 		//待请求参数数组
@@ -100,13 +100,13 @@ class Kohana_AlipaySubmit
 		return $request_data;
 	}
 	
-    /**
-     * 建立请求，以表单HTML形式构造（默认）
-     * @param $para_temp 请求参数数组
-     * @param $method 提交方式。两个值可选：post、get
-     * @param $button_name 确认按钮显示文字
-     * @return 提交表单HTML文本
-     */
+    	/**
+     	 * 建立请求，以表单HTML形式构造（默认）
+     	 * @param $para_temp 请求参数数组
+     	 * @param $method 提交方式。两个值可选：post、get
+     	 * @param $button_name 确认按钮显示文字
+     	 * @return 提交表单HTML文本
+     	 */
 	function buildRequestForm($para_temp, $method, $button_name) 
 	{
 		//待请求参数数组
@@ -115,12 +115,10 @@ class Kohana_AlipaySubmit
 		$sHtml = "<form id='alipaysubmit' name='alipaysubmit' action='".$this->alipay_gateway_new."_input_charset=".trim(strtolower($this->alipay_config['input_charset']))."' method='".$method."'>";
 		while (list ($key, $val) = each ($para)) 
 		{
-            $sHtml.= "<input type='hidden' name='".$key."' value='".$val."'/>";
-        }
+	            $sHtml.= "<input type='hidden' name='".$key."' value='".$val."'/>";
+	        }
 
-		//submit按钮控件请不要含有name属性
-//        $sHtml = $sHtml."<input type='submit' value='".$button_name."'></form>";
-        $sHtml = $sHtml."$button_name</form>";
+	        $sHtml .= '<div style="text-align:center; font-size:24px; padding-top:240px;">'.$button_name.'</div>';
 		
 		$sHtml = $sHtml."<script>document.forms['alipaysubmit'].submit();</script>";
 		
@@ -128,10 +126,10 @@ class Kohana_AlipaySubmit
 	}
 	
 	/**
-     * 建立请求，以模拟远程HTTP的POST请求方式构造并获取支付宝的处理结果
-     * @param $para_temp 请求参数数组
-     * @return 支付宝处理结果
-     */
+     	 * 建立请求，以模拟远程HTTP的POST请求方式构造并获取支付宝的处理结果
+     	 * @param $para_temp 请求参数数组
+     	 * @return 支付宝处理结果
+     	 */
 	function buildRequestHttp($para_temp) 
 	{
 		$sResult = '';
@@ -146,12 +144,12 @@ class Kohana_AlipaySubmit
 	}
 	
 	/**
-     * 建立请求，以模拟远程HTTP的POST请求方式构造并获取支付宝的处理结果，带文件上传功能
-     * @param $para_temp 请求参数数组
-     * @param $file_para_name 文件类型的参数名
-     * @param $file_name 文件完整绝对路径
-     * @return 支付宝返回处理结果
-     */
+     	 * 建立请求，以模拟远程HTTP的POST请求方式构造并获取支付宝的处理结果，带文件上传功能
+     	 * @param $para_temp 请求参数数组
+     	 * @param $file_para_name 文件类型的参数名
+     	 * @param $file_name 文件完整绝对路径
+     	 * @return 支付宝返回处理结果
+     	 */
 	function buildRequestHttpInFile($para_temp, $file_para_name, $file_name) 
 	{
 		//待请求参数数组
@@ -165,9 +163,9 @@ class Kohana_AlipaySubmit
 	}
 	
 	/**
-     * 用于防钓鱼，调用接口query_timestamp来获取时间戳的处理函数
+     	 * 用于防钓鱼，调用接口query_timestamp来获取时间戳的处理函数
 	 * 注意：该功能PHP5环境及以上支持，因此必须服务器、本地电脑中装有支持DOMDocument、SSL的PHP配置环境。建议本地调试时使用PHP开发软件
-     * return 时间戳字符串
+     	 * return 时间戳字符串
 	 */
 	function query_timestamp() 
 	{
