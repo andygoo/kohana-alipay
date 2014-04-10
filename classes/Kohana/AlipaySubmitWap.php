@@ -60,11 +60,11 @@ class Kohana_AlipaySubmitWap extends AlipaySubmit
 	}
 
 	/**
-     * 生成要请求给支付宝的参数数组
-     * 
-     * @param $para_temp 请求前的参数数组
-     * @return 要请求的参数数组
-     */
+     	 * 生成要请求给支付宝的参数数组
+     	 * 
+     	 * @param $para_temp 请求前的参数数组
+     	 * @return 要请求的参数数组
+     	 */
 	function buildRequestPara($para_temp) 
 	{
 		//除去待签名参数数组中的空值和签名参数
@@ -87,11 +87,11 @@ class Kohana_AlipaySubmitWap extends AlipaySubmit
 	}
 	
 	/**
-     * 解析远程模拟提交后返回的信息
-     * 
+     	 * 解析远程模拟提交后返回的信息
+     	 * 
 	 * @param $str_text 要解析的字符串
-     * @return 解析结果
-     */
+     	 * @return 解析结果
+     	 */
 	function parseResponse($str_text) 
 	{
 		//以“&”字符切割字符串
@@ -126,5 +126,34 @@ class Kohana_AlipaySubmitWap extends AlipaySubmit
 		}
 		
 		return $para_text;
+	}
+	
+	/**
+     	 * 建立请求，以表单HTML形式构造（默认）
+     	 * @param $para_temp 请求参数数组
+     	 * @param $method 提交方式。两个值可选：post、get
+     	 * @param $button_name 确认按钮显示文字
+     	 * @return 提交表单HTML文本
+     	 */
+	function buildRequestForm($para_temp, $method, $button_name) 
+	{
+		//待请求参数数组
+		$para = $this->buildRequestPara($para_temp);
+		
+		$sHtml = '<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1,user-scalable=no" />';
+		
+		$sHtml .= "<form id='alipaysubmit' name='alipaysubmit' action='".$this->alipay_gateway_new."_input_charset=".trim(strtolower($this->alipay_config['input_charset']))."' method='".$method."'>";
+		while (list ($key, $val) = each ($para)) 
+		{
+	            $sHtml.= "<input type='hidden' name='".$key."' value='".$val."'/>";
+	        }
+
+        	$sHtml .= '<div style="text-align:center; font-size:24px; padding-top:200px;">'.$button_name.'</div>';
+        
+        	$sHtml .= "</form>";
+		
+		$sHtml .= "<script>document.forms['alipaysubmit'].submit();</script>";
+		
+		return $sHtml;
 	}
 }
